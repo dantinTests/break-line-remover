@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="UTF-8">
+	<meta name="description" content="Esta aplicação remove os espaços ENTER de um texto, deixando todo o texto em uma única linha. Isto pode ser
+	útil, por exemplo, para quando se quer copiar texto de um PDF.">
+	<meta name="keywords" content="remove, break, line, text, html">
+	<meta name="author" content="Dante Marinho">
+	<title>Break Line Remover | Remove Break Lines de um Texto</title>
+	<style>
+		body {
+			/* width: 100%; */
+			padding: 20px;
+			padding-top: 8px;
+		}
+
+		p {
+			display: block;
+			width: 90%;
+			/* margin: auto; */
+			margin-bottom: 15px;
+		}
+
+		input,
+		textarea {
+			display: block;
+			padding: 12px;
+			border-radius: 4px;
+			border: 1px solid #ccc;
+			width: 90%;
+			/* margin: auto; */
+			margin-bottom: 15px;
+		}
+
+		button {
+			padding: 5px;
+			text-transform: uppercase;
+		}
+
+		.tooltip {
+			position: relative;
+			display: inline-block;
+		}
+
+		.tooltip .tooltiptext {
+			visibility: hidden;
+			width: 140px;
+			background-color: #555;
+			color: #fff;
+			text-align: center;
+			border-radius: 6px;
+			padding: 5px;
+			position: absolute;
+			z-index: 1;
+			bottom: 150%;
+			left: 50%;
+			margin-left: -75px;
+			opacity: 0;
+			transition: opacity 0.3s;
+			text-transform: initial;
+		}
+
+		.tooltip .tooltiptext::after {
+			content: "";
+			position: absolute;
+			top: 100%;
+			left: 50%;
+			margin-left: -5px;
+			border-width: 5px;
+			border-style: solid;
+			border-color: #555 transparent transparent transparent;
+		}
+
+		.tooltip:hover .tooltiptext {
+			visibility: visible;
+			opacity: 1;
+		}
+	</style>
+
+	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+	<script>
+		(adsbygoogle = window.adsbygoogle || []).push({
+			google_ad_client: "ca-pub-5947322662274134",
+			enable_page_level_ads: true
+		});
+	</script>
+</head>
+
+<body>
+	<h1>Utilitário para remover break lines de um texto</h1>
+	<p>Insira o texto e pressione ENTER</p>
+	<input type="text" id="text" onClick="this.select();">
+	<!-- <button id="btn">APPLY</button> -->
+	<textarea id="textarea" id="" cols="30" rows="10"></textarea>
+	<div class="tooltip">
+		<button onclick="copyToClipboard()" onmouseout="outFunc()">
+			<span class="tooltiptext" id="myTooltip">Copy to clipboard</span>
+			Copy text
+		</button>
+	</div>
+	<h2>Sobre o Break Line Remover</h2>
+	<p>
+		Esta aplicação remove os espaços ENTER de um texto, deixando todo o texto em uma única linha. Isto pode ser
+		útil, por exemplo, para quando se quer copiar texto de um PDF, que por vezes ao colar, esse texto apresenta
+		quebras de linha onde deveria ter um texto seguido.
+	</p>
+	<p>
+		Ao pressionar ENTER, o texto é automaticamente copiado para a área de transferência (clipboard).
+	</p>
+	<div>By Dante Marinho</div>
+	<script>
+		// Listener to remove break lines
+		document.getElementById("text").addEventListener("keypress", function (e) {
+			var key = e.which || e.keyCode;
+			if (key === 13) { // 13 is enter
+				console.log('Texto com break lines removidos e copiado para o clipboard.')
+				input = document.getElementById('text').value;
+				textarea = document.getElementById('textarea');
+				input = input.replace(/ +(?= )/g, '').trim();
+				textarea.value = input;
+				copyToClipboard()
+			}
+		});
+
+		function copyToClipboard() {
+			var copyText = document.getElementById("textarea");
+			copyText.select();
+			copyText.setSelectionRange(0, 99999);
+			document.execCommand("copy");
+
+			var tooltip = document.getElementById("myTooltip");
+			tooltip.innerHTML = "Copied: " + copyText.value;
+		}
+
+		function outFunc() {
+			var tooltip = document.getElementById("myTooltip");
+			tooltip.innerHTML = "Copy to clipboard";
+		}
+	</script>
+
+</body>
+
+</html>
